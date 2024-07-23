@@ -3,6 +3,7 @@ import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 import { teal, deepOrange, cyan, orange } from '@mui/material/colors'
 
 const theme = extendTheme({
+  
   trello: {
     appBarHeight: '58px',
     boardBarHeight: '60px'
@@ -22,6 +23,23 @@ const theme = extendTheme({
     }
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides:{
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px'
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#bdc3c7',
+            borderRadius: '8px'
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#7f8c8d'
+          }
+        }
+      }
+    },
     // Name of the component
     MuiButton: {
       styleOverrides: {
