@@ -1,15 +1,11 @@
-import React from 'react'
+import Logout from '@mui/icons-material/Logout'
+import PersonAdd from '@mui/icons-material/PersonAdd'
+import Settings from '@mui/icons-material/Settings'
+import { Avatar, Box, IconButton, Menu, Tooltip } from '@mui/material'
 import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Check from '@mui/icons-material/Check'
-import { Avatar, Box, Button, IconButton, Menu, Tooltip } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import { Padding } from '@mui/icons-material'
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import MenuItem from '@mui/material/MenuItem'
+import React from 'react'
 
 const Profiles = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -31,7 +27,7 @@ const Profiles = () => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 30, height: 30 }}>M</Avatar>
+          <Avatar sx={{ width: 34, height: 34 }} src="https://bhd.1cdn.vn/2023/05/20/files-library-newimages-20230520_phim.jpg"></Avatar>
         </IconButton>
       </Tooltip>
       <Menu
