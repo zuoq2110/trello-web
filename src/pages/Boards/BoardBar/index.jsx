@@ -9,13 +9,13 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 const BoardBar = () => {
   const MENU_STYLES = {
-    color: 'primary.main',
-    backgroundColor: 'white',
+    color: 'white',
+    backgroundColor: 'transparent',
     border: 'none',
     paddingX: '5px',
     borderRadius: '4px',
     '& .MuiSvgIcon-root': {
-      color: 'primary.main'
+      color: 'white'
     },
     '&:hover': {
       bgcolor: 'primary.50'
@@ -31,7 +31,8 @@ const BoardBar = () => {
       gap: 2,
       overflowX: 'auto',
       paddingX: 2,
-      borderTop: '1px solid #00bfa5'
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
+      borderBottom: '1px solid white'
     }}>
       <Box sx={{
         display: 'flex',
@@ -64,12 +65,19 @@ const BoardBar = () => {
         alignItems: 'center',
         gap: 2
       }}>
-        <Button startIcon={<PersonAddIcon />} variant='outlined' >Invite</Button>
+        <Button startIcon={<PersonAddIcon />} variant='outlined'
+          sx={{
+            color: 'white',
+            borderColor: 'white',
+            ':hover' :{ borderColor: 'white'}
+          }} >Invite</Button>
         <AvatarGroup max={7} sx={{
+          gap: '10px',
           '& .MuiAvatar-root': {
             width: 34,
             height: 34,
-            fontSize: '16px'
+            fontSize: '16px',
+            border: 'none'
           }
         }}>
           <Avatar alt="Remy Sharp" src="https://bhd.1cdn.vn/2023/05/20/files-library-newimages-20230520_phim.jpg" />
