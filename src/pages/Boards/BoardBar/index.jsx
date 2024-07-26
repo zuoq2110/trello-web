@@ -77,7 +77,12 @@ const BoardBar = () => {
             width: 34,
             height: 34,
             fontSize: '16px',
-            border: 'none'
+            border: 'none',
+            color:'white',
+            cursor:'pointer',
+            ':first-child':{
+              bgcolor: '#a4b0be'
+            }
           }
         }}>
           <Avatar alt="Remy Sharp" src="https://bhd.1cdn.vn/2023/05/20/files-library-newimages-20230520_phim.jpg" />
