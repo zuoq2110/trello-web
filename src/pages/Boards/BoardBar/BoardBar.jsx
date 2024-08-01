@@ -7,7 +7,8 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
-const BoardBar = () => {
+import { capitalizeFirstLetter } from '~/pages/utils/formatters'
+const BoardBar = ({ board }) => {
   const MENU_STYLES = {
     color: 'white',
     backgroundColor: 'transparent',
@@ -38,11 +39,11 @@ const BoardBar = () => {
         alignItems: 'center',
         gap: 2
       }}>
-        <Chip icon={<DashboardIcon />} label='Duong' clickable
+        <Chip icon={<DashboardIcon />} label={board?.title} clickable
           sx={
             MENU_STYLES
           } />
-        <Chip icon={<VpnLockIcon />} label='Public/Private Workspace' clickable
+        <Chip icon={<VpnLockIcon />} label={capitalizeFirstLetter(board?.type)} clickable
           sx={
             MENU_STYLES
           } />
@@ -68,7 +69,7 @@ const BoardBar = () => {
           sx={{
             color: 'white',
             borderColor: 'white',
-            ':hover' :{ borderColor: 'white'}
+            ':hover': { borderColor: 'white' }
           }} >Invite</Button>
         <AvatarGroup max={7} sx={{
           gap: '10px',
@@ -77,9 +78,9 @@ const BoardBar = () => {
             height: 34,
             fontSize: '16px',
             border: 'none',
-            color:'white',
-            cursor:'pointer',
-            ':first-child':{
+            color: 'white',
+            cursor: 'pointer',
+            ':first-child': {
               bgcolor: '#a4b0be'
             }
           }
