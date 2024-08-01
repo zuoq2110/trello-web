@@ -14,10 +14,12 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import React from 'react'
 import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/pages/utils/sorts'
 
 
 
-const Column = () => {
+const Column = ({ column }) => {
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -47,7 +49,7 @@ const Column = () => {
           fontSize: '1rem',
           fontWeight: 'bold',
           cursor: 'pointer'
-        }}>Column Title</Typography>
+        }}>{column.title}</Typography>
         <Box>
           <Tooltip title='More options'>
             <ExpandMoreIcon id="basic-button"
@@ -104,7 +106,7 @@ const Column = () => {
         </Box>
       </Box>
 
-    <ListCards />
+      <ListCards cards={orderedCards} />
 
       <Box sx={{
         height: (theme) => theme.trello.columnFooterHeight,
