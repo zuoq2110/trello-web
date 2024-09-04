@@ -1,4 +1,4 @@
-import { Box, Button, Chip } from '@mui/material'
+import { Box, Button, Chip, Tooltip } from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
@@ -39,10 +39,12 @@ const BoardBar = ({ board }) => {
         alignItems: 'center',
         gap: 2
       }}>
-        <Chip icon={<DashboardIcon />} label={board?.title} clickable
-          sx={
-            MENU_STYLES
-          } />
+        <Tooltip title={board?.description}>
+          <Chip icon={<DashboardIcon />} label={board?.title} clickable
+            sx={
+              MENU_STYLES
+            } />
+        </Tooltip>
         <Chip icon={<VpnLockIcon />} label={capitalizeFirstLetter(board?.type)} clickable
           sx={
             MENU_STYLES
