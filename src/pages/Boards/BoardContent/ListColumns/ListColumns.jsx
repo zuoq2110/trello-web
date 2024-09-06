@@ -4,20 +4,26 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify';
 
 
-const ListColumns = ({ columns }) => {
+const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumn = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
-      console.error('Please enter Column Title!')
+      toast.error('Please enter Column Title!')
       return
     }
-    console.log(newColumnTitle)
+    // console.log(newColumnTitle)
+    const newColumnData = {
+      title: newColumnTitle
+    }
+
+    await createNewColumn(newColumnData)
     toggleOpenNewColumn()
     setNewColumnTitle('')
   }
@@ -36,7 +42,7 @@ const ListColumns = ({ columns }) => {
         }
       }}>
         {columns?.map((column) =>
-          <Column key={column._id} column={column} />
+          <Column key={column._id} column={column} createNewCard={createNewCard} />
         )}
         {!openNewColumnForm ?
           <Box onClick={toggleOpenNewColumn} sx={{

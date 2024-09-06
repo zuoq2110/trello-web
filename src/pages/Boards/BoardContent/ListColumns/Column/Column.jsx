@@ -19,10 +19,11 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Opacity } from '@mui/icons-material'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
 
 
 
-const Column = ({ column }) => {
+const Column = ({ column, createNewCard }) => {
   const {
     attributes,
     listeners,
@@ -54,12 +55,17 @@ const Column = ({ column }) => {
 
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
-      console.error('Please enter Card Title!')
+      toast.error('Please enter Card Title!',{ position: 'bottom-right'})
       return
     }
-    console.log(newCardTitle)
+
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+    await createNewCard(newCardData)
     toggleOpenNewCard()
     setNewCardTitle('')
   }
@@ -172,6 +178,7 @@ const Column = ({ column }) => {
                 type="text"
                 size="small"
                 variant='outlined'
+                data-no-dnd="true"
                 autoFocus
                 value={newCardTitle}
                 onChange={(e) => { setNewCardTitle(e.target.value) }}
@@ -199,6 +206,7 @@ const Column = ({ column }) => {
               />
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Button onClick={addNewCard}
+                  data-no-dnd="true"
                   variant='contained'
                   color="success"
                   size='small'
