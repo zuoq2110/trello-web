@@ -1,9 +1,9 @@
 import {
   DndContext,
   DragOverlay,
-  MouseSensor,
+  // MouseSensor,
   PointerSensor,
-  TouchSensor,
+  // TouchSensor,
   closestCorners,
   defaultDropAnimationSideEffects,
   getFirstCollision,
@@ -22,12 +22,13 @@ import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 import ListColumns from './ListColumns/ListColumns'
 import { generatePlaceholderCard } from '~/pages/utils/formatters'
+import { MouseSensor, TouchSensor } from '~/customLib/DndKitSensor'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
   CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
 }
-const BoardContent = ({ board }) => {
+const BoardContent = ({ board, createNewColumn, createNewCard }) => {
   const pointerSensor = useSensor(PointerSensor, { activationConstraint: { distance: 10 } })
 
   const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 10 } })
@@ -248,7 +249,9 @@ const BoardContent = ({ board }) => {
         display: 'flex',
         p: '10px 0'
       }}>
-        <ListColumns columns={orderedColumns} />
+        <ListColumns columns={orderedColumns}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard} />
         <DragOverlay dropAnimation={dropAnimation}>
           {(!activeDragItemType) && null}
           {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}
