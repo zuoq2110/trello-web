@@ -1,5 +1,8 @@
 
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 import AddCardIcon from '@mui/icons-material/AddCard'
+import CloseIcon from '@mui/icons-material/Close'
 import Cloud from '@mui/icons-material/Cloud'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import ContentPaste from '@mui/icons-material/ContentPaste'
@@ -13,14 +16,8 @@ import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import React, { useState } from 'react'
-import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/pages/utils/sorts'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
-import { Opacity } from '@mui/icons-material'
-import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
-
+import ListCards from './ListCards/ListCards'
 
 
 const Column = ({ column, createNewCard }) => {
@@ -39,9 +36,9 @@ const Column = ({ column, createNewCard }) => {
     transition,
     height: '100%',
     opacity: isDragging ? 0.5 : undefined
-  };
+  }
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const orderedCards = column.cards
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -55,9 +52,13 @@ const Column = ({ column, createNewCard }) => {
 
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
-      toast.error('Please enter Card Title!',{ position: 'bottom-right'})
+      toast.error('Please enter Card Title!', { position: 'bottom-right' })
+      return
+    }
+    if (newCardTitle.length < 3) {
+      toast.error('Card Title must be more than 3 characters!', { position: 'bottom-right' })
       return
     }
 
@@ -65,7 +66,7 @@ const Column = ({ column, createNewCard }) => {
       title: newCardTitle,
       columnId: column._id
     }
-    await createNewCard(newCardData)
+    createNewCard(newCardData)
     toggleOpenNewCard()
     setNewCardTitle('')
   }
