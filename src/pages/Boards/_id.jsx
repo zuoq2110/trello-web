@@ -5,11 +5,12 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 import { mockData } from '~/apis/mock-data'
 import { useEffect, useState } from 'react'
-import { createNewCardApi, createNewColumnApi, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
+import { createNewCardApi, createNewColumnApi, deleteColumnDetailsAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
 import { isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '../utils/formatters'
 import { mapOrder } from '../utils/sorts'
 import CircularProgress from '@mui/material/CircularProgress'
+import { toast } from 'react-toastify'
 const Board = () => {
   const [board, setBoard] = useState(null)
 
@@ -110,6 +111,19 @@ const Board = () => {
     })
   }
 
+  const deleteColumnDetails = (columnId) => {
+    console.log('asdsda')
+    const newBoard = { ...board }
+    console.log(newBoard);
+    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+console.log('new  board:', newBoard);
+    deleteColumnDetailsAPI(columnId).then(res => {
+      toast.success(res?.deleteResult)
+    })
+  }
+
   if (!board) {
     return (
       <Box sx={{
@@ -117,7 +131,6 @@ const Board = () => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 2,
-        width: '100vh',
         height: '100vh'
       }}>
         <CircularProgress />
@@ -136,6 +149,7 @@ const Board = () => {
           moveColumns={moveColumns}
           moveCardInTheSameColumn={moveCardInTheSameColumn}
           moveCardToDifferentColumn={moveCardToDifferentColumn}
+          deleteColumnDetails={deleteColumnDetails}
           board={board} />
       </Container>
     </>
