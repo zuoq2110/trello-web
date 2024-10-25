@@ -112,13 +112,10 @@ const Board = () => {
   }
 
   const deleteColumnDetails = (columnId) => {
-    console.log('asdsda')
     const newBoard = { ...board }
-    console.log(newBoard);
     newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
     newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
     setBoard(newBoard)
-console.log('new  board:', newBoard);
     deleteColumnDetailsAPI(columnId).then(res => {
       toast.success(res?.deleteResult)
     })
