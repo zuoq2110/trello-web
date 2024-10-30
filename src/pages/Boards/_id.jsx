@@ -17,16 +17,18 @@ const Board = () => {
   useEffect(() => {
     const boardId = '66d5d575d234a41a425a241e'
     fetchBoardDetailsAPI(boardId).then((board) => {
+      //sap xep cac du lieu truoc khi dua xuong cac component con
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
       board.columns.forEach(column => {
+        //khi f5 trang web thi can xu li van de keo tha vao 1 column rong
         if (isEmpty(column.cards)) {
           column.cards = [generatePlaceholderCard(column)]
           column.cardOrderIds = [generatePlaceholderCard(column)._id]
         } else {
+          //sap xep thu tu cac cards truoc khi dua xuong cac component con
           column.cards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
         }
       })
-      console.log('full board:', board);
       setBoard(board)
     })
   }, [])
