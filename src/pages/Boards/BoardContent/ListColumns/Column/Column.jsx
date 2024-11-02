@@ -19,8 +19,15 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import ListCards from './ListCards/ListCards'
 import { useConfirm } from 'material-ui-confirm'
+import { createNewCardApi, deleteColumnDetailsAPI } from '~/apis'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
+import { cloneDeep } from 'lodash'
 
-const Column = ({ column, createNewCard, deleteColumnDetails }) => {
+const Column = ({ column }) => {
+  const board = useSelector(selectCurrentActiveBoard)
+  const dispatch = useDispatch()
+
   const {
     attributes,
     listeners,
@@ -39,8 +46,8 @@ const Column = ({ column, createNewCard, deleteColumnDetails }) => {
   }
 
   const orderedCards = column.cards
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -52,7 +59,7 @@ const Column = ({ column, createNewCard, deleteColumnDetails }) => {
 
   const [newCardTitle, setNewCardTitle] = useState('')
 
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
@@ -66,7 +73,27 @@ const Column = ({ column, createNewCard, deleteColumnDetails }) => {
       title: newCardTitle,
       columnId: column._id
     }
-    createNewCard(newCardData)
+    const createdCard = await createNewCardApi({
+      ...newCardData,
+      boardId: board._id
+    })
+
+    // const newBoard = { ...board }
+    const newBoard = cloneDeep(board)
+
+    const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
+    if (columnToUpdate) {
+      // neu column rong thi xoa placeholderCard va them createdCard
+      if (columnToUpdate.cards.some(card => card.FE_PlaceholderCard)) {
+        columnToUpdate.cards = [createdCard]
+        columnToUpdate.cardOrderIds = [createdCard._id]
+      } else {
+        columnToUpdate.cards.push(createdCard)
+        columnToUpdate.cardOrderIds.push(createdCard._id)
+      }
+    }
+    // setBoard(newBoard)
+    dispatch(updateCurrentActiveBoard(newBoard))
     toggleOpenNewCard()
     setNewCardTitle('')
   }
@@ -75,10 +102,18 @@ const Column = ({ column, createNewCard, deleteColumnDetails }) => {
   const handleDeleteColumn = () => {
     confirmDeleteColumn({
       title: 'Delete Column?',
-      description: 'This action will permanently delete your Column and its Cards! Are you sure?',
+      description: 'This action will permanently delete your Column and its Cards! Are you sure?'
 
     }).then(() => {
-      deleteColumnDetails(column._id)
+      const newBoard = { ...board }
+      newBoard.columns = newBoard.columns.filter(c => c._id !== column._id)
+      newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
+      // setBoard(newBoard)
+      dispatch(updateCurrentActiveBoard(newBoard))
+
+      deleteColumnDetailsAPI(column._id).then(res => {
+        toast.success(res?.deleteResult)
+      })
 
     }).catch(() => { })
   }
@@ -257,7 +292,7 @@ const Column = ({ column, createNewCard, deleteColumnDetails }) => {
         </Box>
       </Box>
     </div>
-  );
+  )
 }
 
-export default Column;
+export default Column
