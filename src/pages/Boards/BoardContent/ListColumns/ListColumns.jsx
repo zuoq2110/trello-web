@@ -1,19 +1,27 @@
 import { Box, Button, TextField } from '@mui/material'
-import Column from './Column/Column';
+import Column from './Column/Column'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
-import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable';
-import { useState } from 'react';
+import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
+import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
+import { createNewColumnApi } from '~/apis'
+import { generatePlaceholderCard } from '~/pages/utils/formatters'
+import { cloneDeep } from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 
 
-const ListColumns = ({ columns, createNewColumn, createNewCard, deleteColumnDetails }) => {
+const ListColumns = ({ columns }) => {
+  const board = useSelector(selectCurrentActiveBoard)
+  const dispatch = useDispatch()
+
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumn = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter Column Title!')
       return
@@ -22,8 +30,31 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, deleteColumnDeta
     const newColumnData = {
       title: newColumnTitle
     }
+    //func này có nhiệm vụ gọi API tạo mới column và làm lại dữ liệu state board
+    const createdColumn = await createNewColumnApi({
+      ...newColumnData,
+      boardId: board._id
+    })
 
-    createNewColumn(newColumnData)
+    createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+    createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
+    //Phia FE phai tu lam dung lai state data board thay vi phai goi lai api fetchBoardDetailsAPI
+
+    /*Doan nay dinh loi object is not extensible boi du da copy/clone ra gia tri newBoard nhung ban
+    chat cua spread operator la shallow copy/clone nen dinh phai rules immutability trong redux toolkit khong
+    dung dc push(sua gia tri mang truc tiep), cach don gian nhat la dung deep clone
+    */
+    // const newBoard = { ...board }
+    const newBoard = cloneDeep(board)
+    newBoard.columns.push(createdColumn)
+    newBoard.columnOrderIds.push(createdColumn._id)
+
+    // const newBoard = { ...board }
+    // newBoard.columns = newBoard.columns.concat([createdColumn])
+    // newBoard.columnOrderIds = newBoard.columnOrderIds.concat([createdColumn._id])
+
+    //cap nhat du lieu vao redux store
+    dispatch(updateCurrentActiveBoard(newBoard))
     toggleOpenNewColumn()
     setNewColumnTitle('')
   }
@@ -42,7 +73,7 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, deleteColumnDeta
         }
       }}>
         {columns?.map((column) =>
-          <Column key={column._id} column={column} createNewCard={createNewCard} deleteColumnDetails={deleteColumnDetails}/>
+          <Column key={column._id} column={column}/>
         )}
         {!openNewColumnForm ?
           <Box onClick={toggleOpenNewColumn} sx={{
@@ -98,7 +129,7 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, deleteColumnDeta
                   '&.Mui-focused fieldset': {
                     borderColor: 'white'
                   }
-                },
+                }
               }}
             />
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -123,7 +154,7 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, deleteColumnDeta
 
       </Box>
     </SortableContext>
-  );
+  )
 }
 
-export default ListColumns;
+export default ListColumns
