@@ -1,13 +1,14 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import activeBoardReducer from './activeBoard/activeBoardSlice'
+import { configureStore } from '@reduxjs/toolkit'
+import {activeBoardReducer} from './activeBoard/activeBoardSlice'
 import { userReducer } from './user/userSlice'
 import storage from 'redux-persist/lib/storage'
-import persistReducer from 'redux-persist/es/persistReducer'
+import { persistReducer } from 'redux-persist'
+import { combineReducers } from 'redux'
 //Cau hinh persist
 const rootPersistConfig = {
   key: 'root',
   storage: storage, //luu vao localstorage
-  whiteList: ['user'] //dinh nghia cac slice du lieu dc phep duy tri qua moi lan f5 trinh duyet
+  whitelist: ['user'] //dinh nghia cac slice du lieu dc phep duy tri qua moi lan f5 trinh duyet
 }
 
 //Combine cac reducers trong du an cua chung ta tai day

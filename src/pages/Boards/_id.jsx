@@ -15,6 +15,7 @@ const Board = () => {
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
   const { boardId } = useParams()
+  console.log(board)
 
   useEffect(() => {
     // const boardId = '66d5d575d234a41a425a241e'
