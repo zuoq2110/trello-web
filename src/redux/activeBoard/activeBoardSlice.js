@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
+import authorizeAxiosInstance from '~/pages/utils/authorizeAxios'
 import { isEmpty } from 'lodash'
 import { API_ROOT } from '~/pages/utils/constants'
 import { generatePlaceholderCard } from '~/pages/utils/formatters'
@@ -15,7 +15,7 @@ const initialState = {
 export const fetchBoardDetailsAPI = createAsyncThunk(
   'activeBoard/fetchBoardDetailsAPI',
   async (boardId) => {
-    const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`)
+    const response = await authorizeAxiosInstance.get(`${API_ROOT}/v1/boards/${boardId}`)
     return response.data
   }
 )
@@ -44,7 +44,7 @@ export const activeBoardSlice = createSlice({
       board.columns.forEach(column => {
         //khi f5 trang web thi can xu li van de keo tha vao 1 column rong
         if (isEmpty(column.cards)) {
-          column.cards = [generatePlaceholderCard  (column)]
+          column.cards = [generatePlaceholderCard(column)]
           column.cardOrderIds = [generatePlaceholderCard(column)._id]
         } else {
           //sap xep thu tu cac cards truoc khi dua xuong cac component con

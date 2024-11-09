@@ -1,11 +1,12 @@
 
-import { Box, Container, Typography } from '@mui/material'
-import CircularProgress from '@mui/material/CircularProgress'
+import { Container } from '@mui/material'
 import { cloneDeep } from 'lodash'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import { moveCardToDifferentColumnAPI, updateBoardDetailsAPI, updateColumnDetailsAPI } from '~/apis'
 import AppBar from '~/components/Appbar/AppBar'
+import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 import { fetchBoardDetailsAPI, selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
@@ -13,11 +14,12 @@ const Board = () => {
   const dispatch = useDispatch()
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
+  const { boardId } = useParams()
 
   useEffect(() => {
-    const boardId = '66d5d575d234a41a425a241e'
+    // const boardId = '66d5d575d234a41a425a241e'
     dispatch(fetchBoardDetailsAPI(boardId))
-  }, [dispatch])
+  }, [dispatch, boardId])
 
 
   //func này có nhiệm vụ gọi api khi đã kéo thả xong xuôi
@@ -77,16 +79,7 @@ const Board = () => {
 
   if (!board) {
     return (
-      <Box sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 2,
-        height: '100vh'
-      }}>
-        <CircularProgress />
-        <Typography>Loadng Board...</Typography>
-      </Box>
+      <PageLoadingSpinner caption="Loading Board..."/>
     )
   }
   return (

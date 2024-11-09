@@ -64,10 +64,10 @@ const Column = ({ column }) => {
       toast.error('Please enter Card Title!', { position: 'bottom-right' })
       return
     }
-    if (newCardTitle.length < 3) {
-      toast.error('Card Title must be more than 3 characters!', { position: 'bottom-right' })
-      return
-    }
+    // if (newCardTitle.length < 3) {
+    //   toast.error('Card Title must be more than 3 characters!', { position: 'bottom-right' })
+    //   return
+    // }
 
     const newCardData = {
       title: newCardTitle,
@@ -270,7 +270,9 @@ const Column = ({ column }) => {
                 }}
               />
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Button onClick={addNewCard}
+                <Button
+                  className='interceptor-loading'
+                  onClick={addNewCard}
                   data-no-dnd="true"
                   variant='contained'
                   color="success"

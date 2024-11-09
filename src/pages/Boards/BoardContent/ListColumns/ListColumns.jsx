@@ -73,7 +73,7 @@ const ListColumns = ({ columns }) => {
         }
       }}>
         {columns?.map((column) =>
-          <Column key={column._id} column={column}/>
+          <Column key={column._id} column={column} />
         )}
         {!openNewColumnForm ?
           <Box onClick={toggleOpenNewColumn} sx={{
@@ -133,7 +133,9 @@ const ListColumns = ({ columns }) => {
               }}
             />
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Button onClick={addNewColumn}
+              <Button
+                className='interceptor-loading'
+                onClick={addNewColumn}
                 variant='contained'
                 color="success"
                 size='small'
