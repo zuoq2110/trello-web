@@ -28,6 +28,15 @@ export const logoutUserApi = createAsyncThunk(
     return response.data
   }
 )
+
+export const updateUserApi = createAsyncThunk(
+  'user/updateUserApi',
+  async (data) => {
+    const response = await authorizeAxiosInstance.put(`${API_ROOT}/v1/users/update`, data)
+    return response.data
+  }
+)
+
 //Khoi tao mot cai slice trong kho luu tru - redux store
 export const userSlice = createSlice({
   name: 'user',
@@ -46,6 +55,10 @@ export const userSlice = createSlice({
       // API logout sau khi goi thanh cong thi se clear thong tin currentUser ve null o day
       //Ket hop ProtectedRoute da lam o App.js => code se dieu huong chuan ve trang Login
       state.currentUser = null
+    })
+    builder.addCase(updateUserApi.fulfilled, (state, action) => {
+      const user = action.payload
+      state.currentUser = user
     })
   }
 })

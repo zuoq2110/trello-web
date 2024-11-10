@@ -11,7 +11,7 @@ import { store } from '~/redux/store'
 import { BrowserRouter } from 'react-router-dom'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-
+import { GlobalStyles } from '@mui/material'
 const persistor = persistStore(store)
 
 //Ky thuat Inject Store: la ky thuat khi can su dung vien redux store o cac file ngoai pham vi component
@@ -29,6 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             cancellationButtonProps: { color: 'inherit' },
             allowClose: false
           }}>
+            <GlobalStyles styles={{ a: { textDecoration: 'none' } }} />
             <CssBaseline />
             <App />
             <ToastContainer position='bottom-left' theme='colored' />
