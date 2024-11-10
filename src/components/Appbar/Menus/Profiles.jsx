@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { useConfirm } from 'material-ui-confirm'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { logoutUserApi, selectCurrentUser } from '~/redux/user/userSlice'
 
 const Profiles = () => {
@@ -26,7 +27,7 @@ const Profiles = () => {
   const confirmLogout = useConfirm()
   const handleLogout = () => {
     confirmLogout({
-      title: 'Log out of yout account?',
+      title: 'Log out of your account?',
       confirmationText: 'Confirm',
       cancellationText: 'Cancel'
     }).then(() => {
@@ -58,11 +59,13 @@ const Profiles = () => {
           'aria-labelledby': 'basic-button'
         }}
       >
-        <MenuItem sx={{
-          '&:hover': { color: 'success.light' }
-        }}>
-          <Avatar sx={{ width: 28, height: 28, mr: 2 }} src={currentUser?.avatar}/> Profile
-        </MenuItem>
+        <Link to='/settings/account' style={{ color: 'inherit' }}>
+          <MenuItem sx={{
+            '&:hover': { color: 'success.light' }
+          }}>
+            <Avatar sx={{ width: 28, height: 28, mr: 2 }} src={currentUser?.avatar} /> Profile
+          </MenuItem>
+        </Link>
         <Divider />
         <MenuItem >
           <ListItemIcon>
