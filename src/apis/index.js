@@ -57,3 +57,19 @@ export const refreshTokenApi = async () => {
   const response = await authorizeAxiosInstance.get(`${API_ROOT}/v1/users/refresh_token`)
   return response.data
 }
+
+export const fetchBoardsApi = async (searchPath) => {
+  const response = await authorizeAxiosInstance.get(`${API_ROOT}/v1/boards${searchPath}`)
+  return response.data
+}
+
+export const createNewBoardApi = async (data) => {
+  const response = await authorizeAxiosInstance.post(`${API_ROOT}/v1/boards`, data)
+  toast.success('Board created successfully!')
+  return response.data
+}
+
+export const updateCardDetailsApi = async (cardId, updateData) => {
+  const response = await authorizeAxiosInstance.put(`${API_ROOT}/v1/cards/${cardId}`, updateData)
+  return response.data
+}

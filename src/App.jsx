@@ -6,6 +6,7 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 import Settings from './pages/Settings/Settings'
+import Boards from './pages/Boards'
 
 const ProtectedRoute = ({ user }) => {
   if (!user) return <Navigate to='/login' replace={true} />
@@ -18,7 +19,7 @@ function App() {
     <Routes>
       {/* Redirect Route */}
       <Route path='/' element={
-        <Navigate to='/boards/66d5d575d234a41a425a241e' replace={true} />
+        <Navigate to='/boards' replace={true} />
       } />
 
       {/* Protected Routes hieu don gian trong du an cua chung ta la nhung route chi
@@ -27,6 +28,7 @@ function App() {
         {/* <Outlet /> cua react-router-dom se chay vao cac child route trong nay */}
         {/* Board Details */}
         <Route path='/boards/:boardId' element={<Board />} />
+        <Route path='/boards' element={<Boards />} />
         {/* User Settings */}
         <Route path='/settings/account' element={<Settings />} />
         <Route path='/settings/security' element={<Settings />} />

@@ -10,12 +10,14 @@ import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 import { fetchBoardDetailsAPI, selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
+import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
+import { selectCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 const Board = () => {
   const dispatch = useDispatch()
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
+  const activeCard = useSelector(selectCurrentActiveCard)
   const { boardId } = useParams()
-  console.log(board)
 
   useEffect(() => {
     // const boardId = '66d5d575d234a41a425a241e'
@@ -80,12 +82,13 @@ const Board = () => {
 
   if (!board) {
     return (
-      <PageLoadingSpinner caption="Loading Board..."/>
+      <PageLoadingSpinner caption="Loading Board..." />
     )
   }
   return (
     <>
       <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+        {activeCard && <ActiveCard />}
         <AppBar />
         <BoardBar board={board} />
         <BoardContent
