@@ -32,6 +32,19 @@ export const activeBoardSlice = createSlice({
 
       //update lai du lieu cua currentActiveBoard
       state.currentActiveBoard = board
+    },
+    updateCardInBoard: (state, action) => {
+      //update nested data
+      const incomingCard = action.payload
+
+      //Tìm dần từ board > column > card
+      const column = state.currentActiveBoard.columns.find(i => i._id === incomingCard.columnId)
+      if (column) {
+        const card = column.cards.find(i => i._id === incomingCard._id)
+        if (card) {
+          card.title = incomingCard.title
+        }
+      }
     }
   },
   //extraReducers: Noi xu ly du lieu bat dong bo
@@ -58,7 +71,7 @@ export const activeBoardSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateCurrentActiveBoard } = activeBoardSlice.actions
+export const { updateCurrentActiveBoard, updateCardInBoard } = activeBoardSlice.actions
 
 //Selectors: la noi danh cho cac components ben duoi goi bang hook useSelector() de lay du lieu tu trong 
 //kho redux store ra su dung

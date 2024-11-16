@@ -4,6 +4,7 @@ import { userReducer } from './user/userSlice'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from 'redux'
+import { activeCardReducer } from './activeCard/activeCardSlice'
 //Cau hinh persist
 const rootPersistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const rootPersistConfig = {
 //Combine cac reducers trong du an cua chung ta tai day
 const reducers = combineReducers({
   activeBoard: activeBoardReducer,
-  user: userReducer
+  user: userReducer,
+  activeCard: activeCardReducer
 })
 
 //Thuc hien persist Reducer

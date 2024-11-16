@@ -19,10 +19,11 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import ListCards from './ListCards/ListCards'
 import { useConfirm } from 'material-ui-confirm'
-import { createNewCardApi, deleteColumnDetailsAPI } from '~/apis'
+import { createNewCardApi, deleteColumnDetailsAPI, updateColumnDetailsAPI } from '~/apis'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { cloneDeep } from 'lodash'
+import ToggleFocusInput from '~/components/Form/ToggleFocusInput'
 
 const Column = ({ column }) => {
   const board = useSelector(selectCurrentActiveBoard)
@@ -117,6 +118,20 @@ const Column = ({ column }) => {
 
     }).catch(() => { })
   }
+
+  const onUpdateColumnTitle = (newTitle) => {
+    //Goi api update column va xu ly du lieu board trong redux
+    updateColumnDetailsAPI(column._id, { title: newTitle }).then(() => {
+      const newBoard = cloneDeep(board)
+
+      const columnToUpdate = newBoard.columns.find(c => column._id === c._id)
+      if (columnToUpdate) {
+        columnToUpdate.title = newTitle
+      }
+      dispatch(updateCurrentActiveBoard(newBoard))
+    })
+  }
+
   return (
     <div ref={setNodeRef} style={dndKitColumnStyle} {...attributes} >
       <Box {...listeners}
@@ -136,11 +151,16 @@ const Column = ({ column }) => {
           alignItems: 'center',
           justifyContent: 'space-between'
         }}>
-          <Typography sx={{
+          {/* <Typography sx={{
             fontSize: '1rem',
             fontWeight: 'bold',
             cursor: 'pointer'
-          }}>{column.title}</Typography>
+          }}>{column.title}</Typography> */}
+          <ToggleFocusInput
+            value={column?.title}
+            onChangedValue={onUpdateColumnTitle}
+            data-no-dnd="true"
+          />
           <Box>
             <Tooltip title='More options'>
               <ExpandMoreIcon id="basic-button"

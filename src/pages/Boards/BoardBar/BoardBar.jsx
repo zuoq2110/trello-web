@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/pages/utils/formatters'
+import BoardUserGroup from './BoardUserGroup'
 const BoardBar = ({ board }) => {
   const MENU_STYLES = {
     color: 'white',
@@ -73,34 +74,7 @@ const BoardBar = ({ board }) => {
             borderColor: 'white',
             ':hover': { borderColor: 'white' }
           }} >Invite</Button>
-        <AvatarGroup max={7} sx={{
-          gap: '10px',
-          '& .MuiAvatar-root': {
-            width: 34,
-            height: 34,
-            fontSize: '16px',
-            border: 'none',
-            color: 'white',
-            cursor: 'pointer',
-            ':first-child': {
-              bgcolor: '#a4b0be'
-            }
-          }
-        }}>
-          <Avatar alt="Remy Sharp" src="https://bhd.1cdn.vn/2023/05/20/files-library-newimages-20230520_phim.jpg" />
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-        </AvatarGroup>
+        <BoardUserGroup />
       </Box>
     </Box>
   );

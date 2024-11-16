@@ -9,8 +9,12 @@ import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import { CSS } from '@dnd-kit/utilities'
+import { useDispatch } from 'react-redux'
+import { updateCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
 
 function Card({ card }) {
+  const dispatch = useDispatch()
+
   const {
     attributes,
     listeners,
@@ -32,8 +36,14 @@ function Card({ card }) {
     return !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
   }
 
+  const setActiveCard = () => {
+    //cap nhat data cho activeCard trong redux
+    dispatch(updateCurrentActiveCard(card))
+  }
+
   return (
     <MuiCard
+      onClick={setActiveCard}
       ref={setNodeRef} style={dndKitCardStyle} {...attributes} {...listeners}
       sx={{
         cursor: 'pointer',
