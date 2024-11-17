@@ -42,7 +42,13 @@ export const activeBoardSlice = createSlice({
       if (column) {
         const card = column.cards.find(i => i._id === incomingCard._id)
         if (card) {
-          card.title = incomingCard.title
+          // card.title = incomingCard.title
+
+          //Object.keys de lay toan bo properties (keys) cua incomingCard ve mot array roi forEach ra
+          //Sau do tuy truong hop thi kiem tra them con khong thi cap nhat nguoc lai gia tri vao card nhu ben duoi
+          Object.keys(incomingCard).forEach(key => {
+            card[key] = incomingCard[key]
+          })
         }
       }
     }
@@ -52,6 +58,10 @@ export const activeBoardSlice = createSlice({
     builder.addCase(fetchBoardDetailsAPI.fulfilled, (state, action) => {
       //action.payload o day chinh la response.data tra ve o tren
       let board = action.payload
+
+      //Thanh vien trong cai board se la gop lai cua 2 mang owners va members
+      board.FE_allUsers = board.owners.concat(board.members)
+
       //sap xep cac du lieu truoc khi dua xuong cac component con
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
       board.columns.forEach(column => {
