@@ -1,14 +1,13 @@
-import { Box, Button, Chip, Tooltip } from '@mui/material'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import Avatar from '@mui/material/Avatar'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import VpnLockIcon from '@mui/icons-material/VpnLock'
+import { Box, Chip, Tooltip } from '@mui/material'
 import { capitalizeFirstLetter } from '~/pages/utils/formatters'
 import BoardUserGroup from './BoardUserGroup'
+import InviteBoardUser from './InviteBoardUser'
+
 const BoardBar = ({ board }) => {
   const MENU_STYLES = {
     color: 'white',
@@ -68,13 +67,8 @@ const BoardBar = ({ board }) => {
         alignItems: 'center',
         gap: 2
       }}>
-        <Button startIcon={<PersonAddIcon />} variant='outlined'
-          sx={{
-            color: 'white',
-            borderColor: 'white',
-            ':hover': { borderColor: 'white' }
-          }} >Invite</Button>
-        <BoardUserGroup />
+        <InviteBoardUser boardId={board._id} />
+        <BoardUserGroup boardUsers={board?.FE_allUsers} />
       </Box>
     </Box>
   );
