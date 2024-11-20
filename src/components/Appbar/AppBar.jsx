@@ -1,22 +1,19 @@
-import { Badge, Box, Button, TextField, Tooltip, Typography } from '@mui/material'
-import ModeSelect from '../ModeSelect/ModeSelect'
 import AppsIcon from '@mui/icons-material/Apps'
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
+import { Box, Button, Tooltip, Typography } from '@mui/material'
 import SvgIcon from '@mui/material/SvgIcon'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
-import Workspaces from './Menus/Workspaces'
+import ModeSelect from '../ModeSelect/ModeSelect'
+import Profiles from './Menus/Profiles'
 import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Templates from './Menus/Templates'
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import Profiles from './Menus/Profiles'
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
-import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from '@mui/icons-material/Search'
-import CloseIcon from '@mui/icons-material/Close'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Workspaces from './Menus/Workspaces'
 import Notifications from './Notifications/Notifications'
+import AutoCompleteSearchBoard from './SearchBoards/AutoCompleteSearchBoard'
 const AppBar = () => {
   const [searchValue, setSearchValue] = useState('')
   return (
@@ -74,43 +71,7 @@ const AppBar = () => {
         alignItems: 'center',
         gap: 2
       }}>
-        <TextField
-          value={searchValue}
-          onChange={(e) => { setSearchValue(e.target.value) }}
-          id="outlined-search" label="Search..." type="text" size='small'
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: 'white' }} />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <InputAdornment position="start">
-                <CloseIcon fontSize='small' sx={{
-                  color: searchValue ? 'white' : 'transparent',
-                  cursor: 'pointer'
-                }} onClick={() => setSearchValue('')} />
-              </InputAdornment>
-            )
-          }}
-          sx={{
-            minWidth: '120px',
-            maxWidth: '180px',
-            '& label': { color: 'white' },
-            '& input': { color: 'white' },
-            '& label.Mui-focused': { color: 'white' },
-            '& .MuiOutlinedInput-root': {
-              'fieldset': {
-                borderColor: 'white'
-              },
-              ':hover fieldset': {
-                borderColor: 'white'
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: 'white'
-              }
-            }
-          }} />
+        <AutoCompleteSearchBoard />
         <ModeSelect />
 
         <Notifications />
