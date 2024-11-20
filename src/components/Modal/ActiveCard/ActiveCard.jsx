@@ -38,6 +38,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateCardDetailsApi } from '~/apis'
 import { updateCardInBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { clearAndHideCurrentActiveCard, selectCurrentActiveCard, selectIsShowModalActiveCard, updateCurrentActiveCard } from '~/redux/activeCard/activeCardSlice'
+import { selectCurrentUser } from '~/redux/user/userSlice'
+import { CARD_MEMBER_ACTIONS } from '~/pages/utils/constants'
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -65,6 +67,7 @@ function ActiveCard() {
   const dispatch = useDispatch()
   const activeCard = useSelector(selectCurrentActiveCard)
   const isShowModalActiveCard = useSelector(selectIsShowModalActiveCard)
+  const currentUser = useSelector(selectCurrentUser)
 
   // const [isOpen, setIsOpen] = useState(true)
   // const handleOpenModal = () => setIsOpen(true)
@@ -77,7 +80,6 @@ function ActiveCard() {
   //func dung chung cho cac TH update title, desc, cover, comment,...
   const callApiUpdateCard = async (updateData) => {
     const updatedCard = await updateCardDetailsApi(activeCard._id, updateData)
-
     //B1: cap nhat lai card dang active trong modal hien tai
     dispatch(updateCurrentActiveCard(updatedCard))
 
@@ -113,7 +115,11 @@ function ActiveCard() {
 
   //Dung async await o day de component con CardActivitySection cho va neu thanh cong thi moi clear the input comment
   const onAddCardComments = async (commentToAdd) => {
-    await callApiUpdateCard({commentToAdd})
+    await callApiUpdateCard({ commentToAdd })
+  }
+
+  const onUpdateCardMembers = (incomingMemberInfo) => {
+    callApiUpdateCard({ incomingMemberInfo })
   }
 
   return (
@@ -170,7 +176,10 @@ function ActiveCard() {
               <Typography sx={{ fontWeight: '600', color: 'primary.main', mb: 1 }}>Members</Typography>
 
               {/* Feature 02: Xử lý các thành viên của Card */}
-              <CardUserGroup />
+              <CardUserGroup
+                cardMemberIds={activeCard?.memberIds}
+                onUpdateCardMembers={onUpdateCardMembers}
+              />
             </Box>
 
             <Box sx={{ mb: 3 }}>
@@ -204,10 +213,15 @@ function ActiveCard() {
             <Typography sx={{ fontWeight: '600', color: 'primary.main', mb: 1 }}>Add To Card</Typography>
             <Stack direction="column" spacing={1}>
               {/* Feature 05: Xử lý hành động bản thân user tự join vào card */}
-              <SidebarItem className="active">
-                <PersonOutlineOutlinedIcon fontSize="small" />
-                Join
-              </SidebarItem>
+              {!activeCard?.memberIds?.includes(currentUser._id) &&
+                <SidebarItem className="active" onClick={() => onUpdateCardMembers({
+                  userId: currentUser._id,
+                  action: CARD_MEMBER_ACTIONS.ADD
+                })}>
+                  <PersonOutlineOutlinedIcon fontSize="small" />
+                  Join
+                </SidebarItem>
+              }
               {/* Feature 06: Xử lý hành động cập nhật ảnh Cover của Card */}
               <SidebarItem className="active" component="label">
                 <ImageOutlinedIcon fontSize="small" />
