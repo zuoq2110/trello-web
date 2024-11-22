@@ -11,7 +11,7 @@ import ActiveCard from '~/components/Modal/ActiveCard/ActiveCard'
 import { fetchBoardDetailsAPI, selectCurrentActiveBoard, updateCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
-import AppBar from '~/components/Appbar/AppBar.jsx'
+import AppBar from '~/components/Appbar'
 
 const Board = () => {
   const dispatch = useDispatch()
