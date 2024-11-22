@@ -23,7 +23,7 @@ import SidebarCreateBoardModal from './create'
 import { styled } from '@mui/material/styles'
 import { fetchBoardsApi } from '~/apis'
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from '../utils/constants'
-import AppBar from '~/components/Appbar/AppBar'
+import AppBar from '~/components/Appbar/AppBar.jsx'
 // Styles của mấy cái Sidebar item menu
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
