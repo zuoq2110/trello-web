@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AppBar from '~/components/AppBar/AppBar'
+import AppBar from '/src/components/AppBar/AppBar'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
