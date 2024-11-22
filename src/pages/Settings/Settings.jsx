@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import AppBar from '/src/components/AppBar/AppBar.jsx'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
@@ -11,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Link, useLocation } from 'react-router-dom'
 import AccountTab from './AccountTab'
 import SecurityTab from './SecurityTab'
+import AppBar from '~/components/Appbar/AppBar'
 
 // Khai báo đống tabs ra biến const để dùng lại cho gọn
 const TABS = {
