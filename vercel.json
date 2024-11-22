@@ -1,1 +1,9 @@
-{}
+{
+  "rewrites": [
+      {"source": "/(.*)", "destination": "/"},
+      {
+        "source": "/account/verification",
+        "destination": "/account/verification"
+      }
+  ]
+}
