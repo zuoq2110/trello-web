@@ -10,7 +10,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import { Link, useLocation } from 'react-router-dom'
 import AccountTab from './AccountTab'
 import SecurityTab from './SecurityTab'
-import AppBar from '~/components/Appbar/AppBar'
+import AppBar from '~/components/Appbar/AppBar.jsx'
 
 // Khai báo đống tabs ra biến const để dùng lại cho gọn
 const TABS = {

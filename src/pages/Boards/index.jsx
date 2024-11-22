@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-import AppBar from '~/components/AppBar/AppBar'
+import AppBar from '~/components/AppBar/AppBar.jsx'
 import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 // Grid: https://mui.com/material-ui/react-grid2/#whats-changed
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
