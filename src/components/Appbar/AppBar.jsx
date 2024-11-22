@@ -3,7 +3,6 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import { Box, Button, Tooltip, Typography } from '@mui/material'
 import SvgIcon from '@mui/material/SvgIcon'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
 import ModeSelect from '../ModeSelect/ModeSelect'
@@ -15,7 +14,6 @@ import Workspaces from './Menus/Workspaces'
 import Notifications from './Notifications/Notifications'
 import AutoCompleteSearchBoard from './SearchBoards/AutoCompleteSearchBoard'
 const AppBar = () => {
-  const [searchValue, setSearchValue] = useState('')
   return (
     <Box px={2} sx={{
       width: '100%',

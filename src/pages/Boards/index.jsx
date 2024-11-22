@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { useEffect, useState } from 'react'
-import AppBar from '~/components/AppBar/AppBar.jsx'
+// import AppBar from '~/components/AppBar/AppBar.jsx'
 import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 // Grid: https://mui.com/material-ui/react-grid2/#whats-changed
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
@@ -23,6 +23,7 @@ import SidebarCreateBoardModal from './create'
 import { styled } from '@mui/material/styles'
 import { fetchBoardsApi } from '~/apis'
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from '../utils/constants'
+import AppBar from '~/components/Appbar/AppBar'
 // Styles của mấy cái Sidebar item menu
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
