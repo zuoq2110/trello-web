@@ -1,5 +1,5 @@
 
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Avatar from '@mui/material/Avatar'
@@ -23,7 +23,11 @@ function LoginForm() {
   const navigate = useNavigate()
 
   const { register, handleSubmit, formState: { errors } } = useForm()
-  let [searchParams] = useSearchParams()
+  // let [searchParams] = useSearchParams()
+  const location = useLocation()
+  console.log(location)
+  const searchParams = new URLSearchParams(location.search)
+
   const registeredEmail = searchParams.get('registeredEmail')
   const verifiedEmail = searchParams.get('verifiedEmail')
 

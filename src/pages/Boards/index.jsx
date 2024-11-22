@@ -55,6 +55,7 @@ function Boards() {
    * https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
    */
   const query = new URLSearchParams(location.search)
+
   /**
    * Lấy giá trị page từ query, default sẽ là 1 nếu không tồn tại page từ url.
    * Nhắc lại kiến thức cơ bản hàm parseInt cần tham số thứ 2 là Hệ thập phân (hệ đếm cơ số 10) để đảm bảo chuẩn số cho phân trang

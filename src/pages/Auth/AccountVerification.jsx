@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { Navigate, useLocation, useSearchParams } from 'react-router-dom'
 import { verifyUserApi } from '~/apis'
 import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 
 function AccountVerification() {
-  let [searchParams] = useSearchParams()
-  // const email = searchParams.get('email')
-  // const token = searchParams.get('token')
-  const { email, token } = Object.fromEntries([...searchParams])
+  // let [searchParams] = useSearchParams()
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  console.log(location)
+
+  const email = searchParams.get('email')
+  const token = searchParams.get('token')
+  // const { email, token } = Object.fromEntries([...searchParams])
 
   //Tao mot bien state de viet duoc da verify thanh cong chua
   const [verified, setVerified] = useState(false)
