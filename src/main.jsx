@@ -12,6 +12,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { GlobalStyles } from '@mui/material'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
 const persistor = persistStore(store)
 
 //Ky thuat Inject Store: la ky thuat khi can su dung vien redux store o cac file ngoai pham vi component
@@ -32,7 +34,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           }}>
             <GlobalStyles styles={{ a: { textDecoration: 'none' } }} />
             <CssBaseline />
-            <App />
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+              <App />
+            </GoogleOAuthProvider>
             <ToastContainer position='bottom-left' theme='colored' />
           </ConfirmProvider>
         </CssVarsProvider>

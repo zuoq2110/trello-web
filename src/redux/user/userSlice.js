@@ -18,6 +18,14 @@ export const loginUserApi = createAsyncThunk(
   }
 )
 
+export const loginUserWithGoogle = createAsyncThunk(
+  'activeBoard/loginUserWithGoogle',
+  async (token) => {
+    const response = await authorizeAxiosInstance.post(`${API_ROOT}/v1/users/loginWithGoogle`, {token})
+    return response.data
+  }
+)
+
 export const logoutUserApi = createAsyncThunk(
   'user/logoutUserApi',
   async (showSuccessMessage = true) => {
@@ -57,6 +65,10 @@ export const userSlice = createSlice({
       state.currentUser = null
     })
     builder.addCase(updateUserApi.fulfilled, (state, action) => {
+      const user = action.payload
+      state.currentUser = user
+    })
+    builder.addCase(loginUserWithGoogle.fulfilled, (state, action) => {
       const user = action.payload
       state.currentUser = user
     })
