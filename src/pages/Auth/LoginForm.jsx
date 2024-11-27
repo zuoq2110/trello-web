@@ -1,22 +1,24 @@
 
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import LockIcon from '@mui/icons-material/Lock'
+import { Card as MuiCard } from '@mui/material'
+import Alert from '@mui/material/Alert'
+import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar'
-import LockIcon from '@mui/icons-material/Lock'
-import Typography from '@mui/material/Typography'
-import { Card as MuiCard } from '@mui/material'
-import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
 import CardActions from '@mui/material/CardActions'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import Zoom from '@mui/material/Zoom'
-import Alert from '@mui/material/Alert'
+import { GoogleLogin } from '@react-oauth/google'
 import { useForm } from 'react-hook-form'
-import { EMAIL_RULE, EMAIL_RULE_MESSAGE, FIELD_REQUIRED_MESSAGE, PASSWORD_RULE, PASSWORD_RULE_MESSAGE } from '../utils/validators'
-import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
 import { useDispatch } from 'react-redux'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { loginUserApi } from '~/redux/user/userSlice'
+import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
+import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
+import { loginUserApi, loginUserWithGoogle } from '~/redux/user/userSlice'
+import { EMAIL_RULE, EMAIL_RULE_MESSAGE, FIELD_REQUIRED_MESSAGE, PASSWORD_RULE, PASSWORD_RULE_MESSAGE } from '../utils/validators'
+
 
 function LoginForm() {
   const dispatch = useDispatch()
@@ -40,6 +42,25 @@ function LoginForm() {
       //Doan nay kiem tra khong co loi thi moi redirect ve route /
       if (!res.error) navigate('/')
     })
+  }
+
+  const handleSuccess = async (credentialResponse) => {
+    console.log(credentialResponse)
+    // const result = await loginGoogle(credentialResponse.credential)
+    // console.log(result)
+    toast.promise(
+      dispatch(loginUserWithGoogle(credentialResponse.credential)),
+      { pending: 'Logging in...' }
+    ).then(res => {
+      //Doan nay kiem tra khong co loi thi moi redirect ve route /
+      if (!res.error) navigate('/')
+    })
+
+
+  }
+
+  const handleError = () => {
+    console.log('Login failed!')
   }
   return (
     <form onSubmit={handleSubmit(submitLogIn)}>
@@ -121,6 +142,21 @@ function LoginForm() {
               fullWidth
             >
               Login
+            </Button>
+          </CardActions>
+          <CardActions sx={{ padding: '0 1em 1em 1em' }}>
+            <Button
+              className='interceptor-loading'
+              color="primary"
+              size="large"
+              fullWidth
+            >
+              <GoogleLogin
+                type=''
+                theme="outline"
+                onSuccess={handleSuccess}
+                onError={handleError}
+              />
             </Button>
           </CardActions>
           <Box sx={{ padding: '0 1em 1em 1em', textAlign: 'center' }}>
